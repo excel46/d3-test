@@ -7,7 +7,6 @@ var chart=d3.select(".chart")
 				.attr("class", "svg")
 				.attr("width", svg.w + margin.right + margin.left )
 				.attr("height", svg.h + margin.top + margin.bottom)
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 				
 var xScale=d3.scaleBand()
  .rangeRound([0, svg.w])
@@ -38,17 +37,28 @@ var data = d3.json('src/data/data.json', function(data){
 			.call(yAxis)
 			.attr("transform", "translate("+margin.left+","+(margin.top)+")")
 	
-	var update =chart.selectAll(".rect")
+	var update =chart.selectAll(".circle")
 					.data(data)
 				
 	var enter = update.enter()
-					.append("rect")
-					.attr("class", "rect")
-					.attr("transform", (d) => "translate( "+margin.left+","+margin.top+")")
-					.attr("x", (d)=>xScale(d.name))
-					.attr("y", (d)=>yScale(d.age))
-					.attr("height", (d) =>svg.h- yScale(d.age))
-					.attr("width", xScale.bandwidth());
+					.append("circle")
+						.attr("class", "circle")
+						.attr("transform", (d) => "translate( "+margin.left+","+margin.top+")")
+						.attr("r", 20)
+						.attr("cx", (d)=>xScale(d.name))
+						.attr("cy", (d)=>yScale(d.age))
+						//.attr("height", (d) =>svg.h- yScale(d.age))
+						//.attr("width", xScale.bandwidth())
+		
+		update.enter().append("text")
+						.text((d)=>d.name)
+						.attr("transform", (d) => "translate( "+margin.left+","+margin.top+")")
+						.attr("x", (d)=>xScale(d.name)-10)
+						.attr("y", (d)=>yScale(d.age))
+						.attr("class", "text")
+					
+					
+					
 					
 	
 					
